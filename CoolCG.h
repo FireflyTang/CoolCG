@@ -8,12 +8,12 @@
 
 #ifndef __CoolLib__
 #define __CoolLib__
+#include "CoolMath.h"
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-#include "math3d/math3d.h"
-#include <functional>
+
 #include <glut/glut.h>
 #include "OpenGL/gl.h"
 #include <SOIL/SOIL.h>
@@ -37,20 +37,46 @@ namespace CC{
 		void keyRotateByCenter(int key,int,int);
 		void keyRotateBySelf(int key,int,int);
 		void setLookAt();
-		void setPos(M3DVector3f Pos);
-		void setUp(M3DVector3f Up);
-		void setCenter(M3DVector3f Center);
+		void setPos(CM::Vector _Position);
+		void setUp(CM::Vector _Up);
+		void setCenter(CM::Vector _Center);
 		void setPos(GLfloat x,GLfloat y,GLfloat z);
 		void setUp(GLfloat x,GLfloat y,GLfloat z);
 		void setCenter(GLfloat x,GLfloat y,GLfloat z);
-		M3DMatrix33f	LastRotationMartix33;
-		M3DMatrix44f	LastRotationMartix44;
-		M3DMatrix44f	TotalRotation44;
-		M3DMatrix33f	TotalRotation33;
+		void setRotationStepCoefficient(GLfloat c);
+		void setMoveStepCoefficient(GLfloat c);
+		virtual void MousePress(int button,int state,int x,int y);
+		virtual void MouseMoveByCenter(int x,int y);
+		virtual void MouseMoveBySelf(int x,int y);
+		
+		void InitWindowSize(GLint _WindowSizeX,GLint _WindowSizeY);
+		
+//		M3DMatrix33f	LastRotationMartix33;
+//		M3DMatrix44f	LastRotationMartix44;
+//		M3DMatrix44f	TotalRotation44;
+//		M3DMatrix33f	TotalRotation33;
+
+		CM::Vector Position;
+		CM::Vector Up;
+		CM::Vector Center;
+		CM::Vector Position0;
+		CM::Vector Up0;
+		CM::Vector Center0;
+		
+		GLint WindowSizeX=500,WindowSizeY=500;
 	private:
-		M3DVector3f _Pos;
-		M3DVector3f _Up;
-		M3DVector3f _Center;
+		GLfloat RotationStepCoefficient=1;
+		GLfloat MoveStepCoefficient=1;
+		
+		GLfloat RotateInitStep = 0.2;
+		GLfloat RotateMaxStep = RotateInitStep * 20;
+		GLfloat RotateStepDelta = 1.4;
+		
+		GLfloat MoveInitStep = 5;
+		GLfloat MoveMaxStep = MoveInitStep * 3;
+		GLfloat MoveStepDelta = 1.1;
+		
+		GLint MousePressPositionX,MousePressPositionY;
 	};
 }
 
