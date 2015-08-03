@@ -16,7 +16,7 @@
 
 #include <glut/glut.h>
 #include "OpenGL/gl.h"
-#include <SOIL/SOIL.h>
+#include <SOIL.h>
 
 namespace CC{
 	
@@ -37,7 +37,7 @@ namespace CC{
 		void keyRotateByCenter(int key,int,int);
 		void keyRotateBySelf(int key,int,int);
 		void setLookAt();
-		void setPos(CM::Vector _Position);
+		void setPos(CM::Vector _Postion);
 		void setUp(CM::Vector _Up);
 		void setCenter(CM::Vector _Center);
 		void setPos(GLfloat x,GLfloat y,GLfloat z);
@@ -56,10 +56,10 @@ namespace CC{
 //		M3DMatrix44f	TotalRotation44;
 //		M3DMatrix33f	TotalRotation33;
 
-		CM::Vector Position;
+		CM::Vector Postion;
 		CM::Vector Up;
 		CM::Vector Center;
-		CM::Vector Position0;
+		CM::Vector Postion0;
 		CM::Vector Up0;
 		CM::Vector Center0;
 		
@@ -76,7 +76,7 @@ namespace CC{
 		GLfloat MoveMaxStep = MoveInitStep * 3;
 		GLfloat MoveStepDelta = 1.1;
 		
-		GLint MousePressPositionX,MousePressPositionY;
+		GLint MousePressPostionX,MousePressPostionY;
 	};
 }
 

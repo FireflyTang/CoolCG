@@ -27,7 +27,7 @@ namespace CC{
 	void
 	classControl::
 	setLookAt(){
-		gluLookAt(Position[0],Position[1],Position[2], Center[0], Center[1], Center[2], Up[0], Up[1], Up[2]);
+		gluLookAt(Postion[0],Postion[1],Postion[2], Center[0], Center[1], Center[2], Up[0], Up[1], Up[2]);
 	}
 	
 	void
@@ -47,7 +47,7 @@ namespace CC{
 			  ||(key==GLUT_KEY_LEFT)
 			  ||(key==GLUT_KEY_RIGHT)))return;
 		
-		view=Center-Position;
+		view=Center-Postion;
 		right=view.cross(Up);
 		
 		//绕right旋转
@@ -88,7 +88,7 @@ namespace CC{
 		RotationMartix33 = CM::GetRotationMatrix(angle,axis[0], axis[1], axis[2]);
 		view=RotationMartix33*view;
 		Up=RotationMartix33*Up;
-		Position=Center-view;
+		Postion=Center-view;
 		
 		last_key = key;
 		//	m3dCopyMatrix33(LastRotationMartix33,RotationMartix33);
@@ -124,7 +124,7 @@ namespace CC{
 			  ||(key==GLUT_KEY_LEFT)
 			  ||(key==GLUT_KEY_RIGHT)))return;
 		
-		view=Center-Position;
+		view=Center-Postion;
 		right=view.cross(Up);
 		
 		//绕right旋转
@@ -165,7 +165,7 @@ namespace CC{
 		RotationMartix33 = CM::GetRotationMatrix(angle,axis[0], axis[1], axis[2]);
 		view=RotationMartix33*view;
 		Up=RotationMartix33*Up;
-		Center=Position+view;
+		Center=Postion+view;
 		
 		last_key = key;
 		//	m3dCopyMatrix33(LastRotationMartix33,RotationMartix33);
@@ -220,7 +220,7 @@ namespace CC{
 		static GLfloat CurrntStep,CurrntStep0;
 		static GLint last_key;
 		
-		view=Center-Position;
+		view=Center-Postion;
 	
 		if(last_key==key)
 			CurrntStep0 = fmin(MoveMaxStep, CurrntStep0*MoveStepDelta);
@@ -231,39 +231,39 @@ namespace CC{
 		switch (key) {
 			case 'w':{
 				move0=CurrntStep*view.normalized();
-				Position+=move0;
+				Postion+=move0;
 				Center+=move0;
 				break;
 			}
 			case 's':{
 				move0=CurrntStep*view.normalized();
-				Position-=move0;
+				Postion-=move0;
 				Center-=move0;
 				break;
 			}
 			case 'a':{
 				right=view.cross(Up);
 				move0=CurrntStep*right.normalized();
-				Position-=move0;
+				Postion-=move0;
 				Center-=move0;
 				break;
 			}
 			case 'd':{
 				right=view.cross(Up);
 				move0=CurrntStep*right.normalized();
-				Position+=move0;
+				Postion+=move0;
 				Center+=move0;
 				break;
 			}
 			case 'h':{
 				CM::Vector yaxis(0,CurrntStep,0);
-				Position+=yaxis;
+				Postion+=yaxis;
 				Center+=yaxis;
 				break;
 			}
 			case 'l':{
 				CM::Vector yaxis(0,CurrntStep,0);
-				Position-=yaxis;
+				Postion-=yaxis;
 				Center-=yaxis;
 				break;
 			}
@@ -282,8 +282,8 @@ namespace CC{
 	
 	void
 	classControl::
-	setPos(CM::Vector _Position){
-		Position=_Position;
+	setPos(CM::Vector _Postion){
+		Postion=_Postion;
 	}
 	void
 	classControl::
@@ -298,7 +298,7 @@ namespace CC{
 	void
 	classControl::
 	setPos(GLfloat x,GLfloat y,GLfloat z){
-		Position.set(x,y,z);
+		Postion.set(x,y,z);
 	}
 	void
 	classControl::
@@ -325,9 +325,9 @@ namespace CC{
 	classControl::
 	MousePress(int button,int state,int x,int y){
 		if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
-			MousePressPositionX=x;
-			MousePressPositionY=y;
-			Position0=Position;
+			MousePressPostionX=x;
+			MousePressPostionY=y;
+			Postion0=Postion;
 			Up0=Up;
 			Center0=Center;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 		}
@@ -337,30 +337,30 @@ namespace CC{
 	classControl::
 	MouseMoveByCenter(int x,int y){
 		GLfloat AngleX,AngleY;
-		AngleX=rad2deg(atanf(((float)(MousePressPositionX-x))/250));
-		AngleY=rad2deg(atanf(((float)(MousePressPositionY-y))/250));
-		Vector view0=Center0-Position0;
+		AngleX=rad2deg(atanf(((float)(MousePressPostionX-x))/250));
+		AngleY=rad2deg(atanf(((float)(MousePressPostionY-y))/250));
+		Vector view0=Center0-Postion0;
 		Vector right0=view0.cross(Up0);
 		Matrix RotationXMatrix=GetRotationMatrix(AngleX, Up0[0], Up0[1], Up0[2]);
 		Matrix RotationYMatrix=GetRotationMatrix(AngleY, right0[0], right0[1], right0[2]);
 		view0=RotationXMatrix*RotationYMatrix*view0;
 		Up=RotationXMatrix*RotationYMatrix*Up0;
-		Position=Center0-view0;
+		Postion=Center0-view0;
 		glutPostRedisplay();
 	}
 	void
 	classControl::
 	MouseMoveBySelf(int x,int y){
 		GLfloat AngleX,AngleY;
-		AngleX=rad2deg(atanf(((float)(MousePressPositionX-x))/WindowSizeX));
-		AngleY=rad2deg(atanf(((float)(MousePressPositionY-y))/WindowSizeY));
-		Vector view0=Center0-Position0;
+		AngleX=rad2deg(atanf(((float)(MousePressPostionX-x))/WindowSizeX));
+		AngleY=rad2deg(atanf(((float)(MousePressPostionY-y))/WindowSizeY));
+		Vector view0=Center0-Postion0;
 		Vector right0=view0.cross(Up0);
 		Matrix RotationXMatrix=GetRotationMatrix(-AngleX, 0, 1, 0);
 		Matrix RotationYMatrix=GetRotationMatrix(-AngleY, right0[0], right0[1], right0[2]);
 		view0=RotationXMatrix*RotationYMatrix*view0;
 		Up=RotationXMatrix*RotationYMatrix*Up0;
-		Center=Position+view0;
+		Center=Postion+view0;
 		glutPostRedisplay();
 	}
 	
